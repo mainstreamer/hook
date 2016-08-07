@@ -27,8 +27,8 @@ $message = '
         }
     ]
 }';
-
-return $message;
+echo $message;
+return;
 //$curl = curl_init();
 //$options = [
 //        CURLOPT_URL => 'http://api.openweathermap.org/data/2.5/forecast/city?id=703448&APPID=84e19d41375b77b64e5b6c7036aee0e3',
