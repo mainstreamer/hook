@@ -18,45 +18,56 @@ curl_close($curl);
 
 //$data = file_get_contents('weather.txt');
 $data = json_decode($data, true, 512);
-
-//var_dump(($data['list']));exit;
+//echo '<pre>';
+//var_dump(($data['list'][0]['weather'][0]['icon']));exit;
 
 $headline = $city.' '.$data['city']['name'].' '.$data['city']['country'].'';
 //$limit = count(($data['list']));
 $formattedData = [];
+$icon = [];
 foreach ($data['list'] as $key => $record) {
-    $formattedData[$key] = date('D H:i',($data['list'][$key]['dt'])).' '.round($record['main']['temp']-273.15).'C '.$record["weather"][0]['description'].' press.: '.round($record['main']['pressure']).' humidity: '.$record['main']['humidity'].'% wind: '.$record['wind']['speed'].' m/s ';
-    $formattedData[$key]['icon'] = $record["weather"][0]['icon'];
+    $temp = round($record['main']['temp']-273.15);
+    if ($temp > 0) {$temp = '+'.$temp;}
+    $date = date('D H:i',($data['list'][$key]['dt']));
+    $formattedData[$key] = $date.' '.$temp.'C, '.$record["weather"][0]['description'].', humidity: '.$record['main']['humidity'].'%, '.' press.: '.round($record['main']['pressure']).' kPa, wind: '.$record['wind']['speed'].' m/s ';
+    $icon[] = $record["weather"][0]['icon'];
 }
+//echo $formattedData[0]['icon']; exit;
+
+$attachments = '';
+foreach ($formattedData as $k => $v ) {
+    if ($k < 5) {
+    $attachments.='
+    {
+        "fallback": "Weather.",
+            "color": "#36a64f",
+            "title": "'.$city.' weather",
+            "title_link": "https://api.slack.com/",
+            "text": "'.$v.'",
+            "fields": [
+                {
+                    "text" : "'.$icon[$k].'"
+                }
+            ],
+            "image_url": "http://openweathermap.org/img/w/'.$icon[$k].'.png"
+    },';
+    }
+}
+
+$attachments = substr($attachments,0,strlen($attachments)-1);
 
 
 $payload = '{  
 "fallback": "Required text summary of the attachment that is shown by clients that understand attachments but choose not to show them.",
 
 
-"attachments": [
-        {
-            "fallback": "Weather.",
-            "color": "#36a64f",
-            "title": "'.$city.' weather",
-            "title_link": "https://api.slack.com/",
-            "text": "'.$formattedData[0].'",
-            "fields": [
-                {
-                }
-            ],
-            "image_url": "http://openweathermap.org/img/w/'.$formattedData[0]['icon'].'.png",
-            "thumb_url": "http://example.com/path/to/thumb.png",
-            "footer": "Slack API",
-            "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
-            "ts": 123456789
-        }
+"attachments": ['.$attachments.'
+        
     ],
-"text": ""
+"text": "'.$formattedData[39].'"
 }';
 
-echo $payload;
-/*
+
 $curl = curl_init();
 $options = [
     CURLOPT_URL => 'https://hooks.slack.com/services/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',
@@ -66,4 +77,4 @@ $options = [
 
 curl_setopt_array($curl, $options);
 $data = curl_exec($curl);
-curl_close($curl);*/
+curl_close($curl);
