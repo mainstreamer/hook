@@ -1,9 +1,10 @@
 <?php
 
-if (isset ($_POST)){
+if (isset ($_POST['text'])){
     $city = $_POST['text'];
 } else { $city = 'Kiev';};
 
+var_dump($_POST);
 echo $city;
 echo 'ffff';
 exit;
