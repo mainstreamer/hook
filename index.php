@@ -26,7 +26,7 @@ echo '<pre>';
 
 //var_dump(($data['list']));exit;
 
-echo $data['city']['name'].' '.$data['city']['country'].'<br>';
+echo $city.' ',$data['city']['name'].' '.$data['city']['country'].'';
 //$limit = count(($data['list']));
 //$i = 0;
 foreach ($data['list'] as $key => $record) {
