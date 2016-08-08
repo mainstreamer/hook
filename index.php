@@ -25,10 +25,9 @@ $headline = $city.' '.$data['city']['name'].' '.$data['city']['country'].'';
 //$limit = count(($data['list']));
 $formattedData = [];
 foreach ($data['list'] as $key => $record) {
-    $formattedData[$key] = date('D H:i',($data['list'][$key]['dt'])).' '.round($record['main']['temp']-273.15).'C '.$record["weather"][0]['description'].' pressure: '.round($record['main']['pressure']).' humidity: '.$record['main']['humidity'].'% wind: '.$record['wind']['speed'].' m/s ';
+    $formattedData[$key] = date('D H:i',($data['list'][$key]['dt'])).' '.round($record['main']['temp']-273.15).'C '.$record["weather"][0]['description'].' press.: '.round($record['main']['pressure']).' humidity: '.$record['main']['humidity'].'% wind: '.$record['wind']['speed'].' m/s ';
     $formattedData[$key]['icon'] = $record["weather"][0]['icon'];
 }
-
 
 
 $payload = '{  
@@ -56,6 +55,8 @@ $payload = '{
 "text": ""
 }';
 
+echo $payload;
+/*
 $curl = curl_init();
 $options = [
     CURLOPT_URL => 'https://hooks.slack.com/services/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',
@@ -65,4 +66,4 @@ $options = [
 
 curl_setopt_array($curl, $options);
 $data = curl_exec($curl);
-curl_close($curl);
+curl_close($curl);*/
