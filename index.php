@@ -17,10 +17,10 @@ $options = [
 
 curl_setopt_array($curl, $options);
 $data = curl_exec($curl);
-file_put_contents('weather.txt',$data);
+//file_put_contents('weather.txt',$data);
 curl_close($curl);
 
-$data = file_get_contents('weather.txt');
+//$data = file_get_contents('weather.txt');
 $data = json_decode($data, true, 512);
 echo '<pre>';
 
@@ -30,7 +30,7 @@ echo $data['city']['name'].' '.$data['city']['country'].'<br>';
 //$limit = count(($data['list']));
 //$i = 0;
 foreach ($data['list'] as $key => $record) {
-    echo date('D H:i',($data['list'][$key]['dt'])).' '.round($record['main']['temp']-273.15).'C '.$record["weather"][0]['description'].' pressure: '.round($record['main']['pressure']).' humidity: '.$record['main']['humidity'].'% wind: '.$record['wind']['speed'].' m/s <br>';
+    echo date('D H:i',($data['list'][$key]['dt'])).' '.round($record['main']['temp']-273.15).'C '.$record["weather"][0]['description'].' pressure: '.round($record['main']['pressure']).' humidity: '.$record['main']['humidity'].'% wind: '.$record['wind']['speed'].' m/s \\n';
 }
 
 //var_dump(array_keys($data));
