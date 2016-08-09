@@ -79,6 +79,6 @@ curl_setopt_array($curl, $options);
 //$data = curl_exec($curl);
 curl_close($curl);
 
-echo '{ "payload" : '.$payload.'}';
+echo '{ "payload" : ['.$payload.']}';
 
 echo ' '.$formattedData[0];
