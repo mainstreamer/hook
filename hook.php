@@ -36,6 +36,7 @@ $payload = '{
 $curl = curl_init();
 $options = [
         CURLOPT_URL => 'https://hooks.slack.com/services/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',
+//        CURLOPT_URL => 'hooks.slack.com/commands/1234/5678',
     CURLOPT_POST => true,
     CURLOPT_POSTFIELDS => $payload,
     ];
