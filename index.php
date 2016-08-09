@@ -79,4 +79,4 @@ curl_setopt_array($curl, $options);
 $data = curl_exec($curl);
 curl_close($curl);
 
-echo $formattedData[0];
+echo ' '.$formattedData[0];
