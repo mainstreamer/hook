@@ -70,15 +70,18 @@ $payload = '{
 
 $curl = curl_init();
 $options = [
-    CURLOPT_URL => 'https://hooks.slack.com/services/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',
+//    CURLOPT_URL => 'https://hooks.slack.com/services/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',
+    CURLOPT_URL => $_POST['response_url'],
     CURLOPT_POST => true,
+    CURLOPT_HEADER => 'Content-type: application/json',
     CURLOPT_POSTFIELDS => $payload,
 ];
 
 curl_setopt_array($curl, $options);
 //$data = curl_exec($curl);
+curl_exec($curl);
 curl_close($curl);
 
-echo '{ "payload" : ['.$payload.']}';
+//echo $payload.']}';
 
-echo ' '.$formattedData[0];
+//echo ' '.$formattedData[0];
